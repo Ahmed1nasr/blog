@@ -1,0 +1,338 @@
+<!doctype html>
+<html lang="en" class="font-sans antialiased">
+
+<!-- Mirrored from divinglaravel.com/better-management-of-database-transactions-in-laravel-8 by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 14 Feb 2021 10:34:51 GMT -->
+<!-- Added by HTTrack -->
+<meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+    <link rel="alternate" type="application/atom+xml" title="Diving Laravel" href="feed">
+
+    <meta name="theme-color" content="#011627">
+
+    <title>Better Management of Database Transactions in Laravel 8 - Diving Laravel </title>
+    <meta name="twitter:title" content="Better Management of Database Transactions in Laravel 8 - Diving Laravel ">
+    <meta name="og:title" content="Better Management of Database Transactions in Laravel 8 - Diving Laravel ">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:description"
+        content="Using database transactions is a powerful way to ensure data integrity. However, it&#039;s a bit tricky to control how non-sql code that runs around database transactions behaves when transactions are committed or rolled back. In this post, we&#039;ll look into...">
+    <meta name="twitter:site" content="@themsaid">
+    <meta name="twitter:image" content="better-management-of-database-transactions-in-laravel-8/image.png">
+
+    <meta name="og:site_name" content="Diving Laravel">
+    <meta name="og:image" content="better-management-of-database-transactions-in-laravel-8/image.png">
+    <meta name="og:type" content="website">
+    <meta name="og:locale" content="en_US">
+
+    <script src="../cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <link rel="stylesheet" href="../cdn.jsdelivr.net/gh/highlightjs/cdn-release%409.13.1/build/styles/sunburst.min.css">
+
+    <!-- Styles -->
+    <link href="css/main.css?id=50f9b785cb9b0883434d" rel="stylesheet">
+
+    <script>
+        if (window.matchMedia &&
+            window.matchMedia('(prefers-color-scheme: light)').matches) {
+            var head = document.getElementsByTagName('head')[0];
+            var link = document.createElement('link');
+            link.rel = 'stylesheet';
+            link.type = 'text/css';
+            link.href = '../cdn.jsdelivr.net/gh/highlightjs/cdn-release%409.13.1/build/styles/github.min.css';
+            head.appendChild(link);
+        }
+    </script>
+
+    <style>
+        @media (prefers-color-scheme: light) {
+            body {
+                background: #fff;
+                background-image: none !important;
+            }
+
+            .text-white,
+            .text-text-color,
+            a {
+                color: #4a5568;
+            }
+
+            .border-light {
+                border-color: #dbe6ef;
+            }
+
+            .text-muted {
+                color: #3e5780;
+            }
+
+            .text-white:hover,
+            a:hover {
+                color: #000 !important;
+            }
+
+            .bg-light {
+                background-color: #e9eef2;
+            }
+
+            .post-body code:not(.hljs) {
+                background: #cde0ef;
+                color: #205378;
+            }
+
+            .post-body pre {
+                background: #e9eef2;
+                color: #000;
+            }
+        }
+    </style>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Fathom - beautiful, simple website analytics -->
+    <script src="../cdn.usefathom.com/script.js" site="UDEQGJZA" defer></script>
+    <!-- / Fathom -->
+
+</head>
+
+<body class="text-white body-bg-gradient bg-repeat-x">
+
+    <header class="py-5 mb-10">
+        <div class="container mx-auto px-5 lg:max-w-screen">
+            <div class="flex items-center">
+                <a href="index.html" class="no-underline text-white text-2xl font-thin tracking-wide">Diving Laravel</a>
+
+                <div class="ml-auto flex items-center">
+                    <a href="index.html"
+                        class="text-white no-underline hover:underline text-xs font-bold uppercase">Home</a>
+                    <a href="topics.html"
+                        class="ml-5 text-white no-underline hover:underline text-xs font-bold uppercase">Topics</a>
+                    <a href="quick-dip.html"
+                        class="ml-5 text-white no-underline hover:underline text-xs font-bold uppercase">Quick Dip</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container mx-auto px-5 lg:max-w-lg mt-20">
+        <h1 class="mb-5 font-sans">Better Management of Database Transactions in Laravel 8</h1>
+
+        <p class="text-muted text-sm font-sans block">
+            <span>Updated: Dec 22, 2020 —</span>
+            <span class="uppercase">2 min Read</span>
+            —
+            <a href="databases.html" class="text-muted">#databases</a>
+            <a href="queues.html" class="text-muted">#queues</a>
+            <a href="notifications.html" class="text-muted">#notifications</a>
+        </p>
+
+        <div
+            class="mt-20 mb-10 leading-loose text-base text-text-color flex flex-col justify-center items-center post-body">
+            <p>Using database transactions is a powerful way to ensure data integrity. You group multiple database
+                queries into a single transaction, these queries will only take effect if they all succeed. Consider the
+                following code:</p>
+            <pre class="ql-syntax" spellcheck="false">$user = User::create([...]);
+
+Team::create([
+    <span class="hljs-string">'owner_id'</span> =&gt; $user-&gt;id,
+    ...
+]);
+</pre>
+            <p>If the team creation fails, a user will be left in your system with no team. To prevent this from
+                happening, you can wrap the block inside a transaction:</p>
+            <pre class="ql-syntax" spellcheck="false">DB::transaction(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
+    $user = User::create([...]);
+
+    Team::create([
+        <span class="hljs-string">'owner_id'</span> =&gt; $user-&gt;id,
+        ...
+    ]);
+});
+</pre>
+            <p>Now if the team creation fails, the entire transaction will be rolled back, including the query that
+                creates the user. Laravel takes care of everything behind the scenes so you can ensure your data
+                integrity with just a few lines of code.</p>
+            <p>However, database transactions wrap <strong>only</strong> database queries and execute them as a single
+                unit of work. Any other code you may include inside the transaction will be executed right away and will
+                not wait for after the transaction has committed:</p>
+            <pre class="ql-syntax" spellcheck="false">DB::transaction(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
+    $user = User::create([...]);
+
+    Mail::to($user)-&gt;send(<span class="hljs-keyword">new</span> WelcomeEmail());
+
+    Team::create([
+        <span class="hljs-string">'owner_id'</span> =&gt; $user-&gt;id,
+        ...
+    ]);
+});
+</pre>
+            <p>In the example above, the welcome email will be sent to the user even if the team creation fails and the
+                user record was not stored in the database. </p>
+            <p>An obvious fix for this issue is to extract the mail sending code outside the transaction:</p>
+            <pre class="ql-syntax" spellcheck="false">DB::transaction(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
+    $user = User::create([...]);
+
+    Team::create([
+        <span class="hljs-string">'owner_id'</span> =&gt; $user-&gt;id,
+        ...
+    ]);
+});
+
+Mail::to($user)-&gt;send(<span class="hljs-keyword">new</span> WelcomeEmail());
+</pre>
+            <p>Now if the transaction fails, an exception will be thrown and the mail will not be sent. However, in many
+                cases code that runs around database queries is not directly invoked. For example, the email sending
+                could be inside a listener to the <code>UserCreated</code> event that fires after
+                <code>User::create()</code>. In that case, the email sending will happen right after the user is created
+                and before the transaction has committed.</p>
+            <p>Starting Laravel <code>v8.19.0</code>, you can wrap any code inside a closure that'll only get invoked
+                after all transactions have committed. So inside the event listener that sends the email, you can do
+                this:</p>
+            <pre class="ql-syntax" spellcheck="false"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">SendWelcomeEmail</span></span>{
+    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">handle</span><span class="hljs-params">()</span>
+    </span>{
+        DB::afterCommit(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
+            Mail::to($user)-&gt;send(<span class="hljs-keyword">new</span> WelcomeEmail());
+        });
+    }    
+}
+</pre>
+            <p>Now when the user gets created and the event is fired, the listener will call the
+                <code>afterCommit</code> method which will put the mail sending logic in a local cache and will only
+                execute it after any database transaction that may be open has committed.</p>
+            <p>But let's agree, having to wrap code inside a closure doesn't make it look any nicer. For that reason,
+                Laravel introduces another way to ensure your listeners are only executed when database transactions
+                have committed. Let's take the <code>SendWelcomeEmail</code> listener as an example:</p>
+            <pre class="ql-syntax" spellcheck="false"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">SendWelcomeEmail</span></span>{
+    <span class="hljs-keyword">public</span> $afterCommit = <span class="hljs-keyword">true</span>;
+
+    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">handle</span><span class="hljs-params">()</span>
+    ﻿</span>{
+        Mail::to($user)-&gt;send(<span class="hljs-keyword">new</span> WelcomeEmail());
+    }    
+}
+</pre>
+            <p>Using the <code>$afterCommit</code> property, we can instruct laravel to only run the
+                <code>handle()</code> method after any open transactions have committed. If no transactions are open,
+                the code will run right away like normal.</p>
+            <p>Another scenario in which this comes in handy is dispatching a queued job, mail, notification,
+                broadcasted event, or listener from inside a transaction. The workers may pick the work before the
+                transaction commits and the code will run on a database state where the records modified by the
+                transaction are still in their old state. For example:</p>
+            <pre class="ql-syntax" spellcheck="false">DB::transaction(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
+    $user = User::create([...]);
+
+    SendWelcomeEmail::dispatch($user);
+
+    Team::create([
+        <span class="hljs-string">'owner_id'</span> =&gt; $user-&gt;id,
+        ...
+    ]);
+});
+</pre>
+            <p>The <code>SendWelcomeEmail</code> job will be dispatched to the queue before the transaction commits. If
+                a worker picks it right away, a <code>ModelNotFound</code> exception will be thrown because the User
+                model passed to the job hasn't been stored in the database yet.</p>
+            <p>Setting the <code>$afterCommit</code> property to true in the job class will ensure the job only gets
+                dispatched if the transaction has committed. You can also set <code>after_commit</code> to
+                <code>true</code> in the queue connection configuration inside the <code>queue.php</code> configuration
+                file:</p>
+            <pre class="ql-syntax" spellcheck="false"><span class="hljs-string">'redis'</span> =&gt; [
+    <span class="hljs-string">'driver'</span> =&gt; <span class="hljs-string">'redis'</span>,
+    <span class="hljs-string">'connection'</span> =&gt; <span class="hljs-string">'default'</span>,
+    <span class="hljs-comment">// ...</span>
+    <span class="hljs-string">'after_commit'</span> =&gt; <span class="hljs-keyword">true</span>
+],
+</pre>
+            <p>Now all jobs dispatched through the <code>redis</code> queue connection will wait until any open
+                transaction has committed.</p>
+            <p>Alternatively, you can decide the behaviour while dispatching the job:</p>
+            <pre class="ql-syntax" spellcheck="false">SendWelcomeEmail::dispatch($user)-&gt;afterCommit();
+<span class="hljs-comment">// OR</span>
+SendWelcomeEmail::dispatch($user)-&gt;beforeCommit();
+</pre>
+            <p>You can use the <code>$afterCommit</code> property on mailables, notifications, jobs, listeners, model
+                observers, and broadcasted events.</p>
+        </div>
+
+        <div class="w-full mb-10 p-5 bg-light rounded">
+            <p class="mb-5 leading-loose">
+                Hey! 👋 If you want to receive updates on what I'm up to, I host a newsletter on my website <a
+                    href="https://themsaid.com/">themsaid.com</a> and would love to have you.
+            </p>
+
+
+            <form method="POST" action="https://divinglaravel.com/newsletter">
+                <div id="my_name_wbqpaSWDEJAlgN8s_wrap" style="display:none;">
+                    <input name="my_name_wbqpaSWDEJAlgN8s" type="text" value="" id="my_name_wbqpaSWDEJAlgN8s">
+                    <input name="valid_from" type="text"
+                        value="eyJpdiI6InI5bjhCdml1SURUUGJrZFhsTm1zYmc9PSIsInZhbHVlIjoibWZmcG9wT0YvN2FJckhDSmNtdFB5dz09IiwibWFjIjoiMjFkNjE3NGJmZDVlNmFjMmZlOTg3OGYwZWRjOTVkYjYzNmU2NWQ3NTU3NmNhNzNlZWE2NjgzZjg5NTkwZDUzOCJ9">
+                </div>
+                <input type="hidden" name="_token" value="z772BDrjOfDJZfihhnkjMhbPf2St4x5kuq4R09Xj">
+                <div class="flex">
+                    <div class="w-1/2">
+                        <input class="bg-white focus:outline-none py-2 px-4 block w-full appearance-none leading-normal"
+                            type="email" name="email" placeholder="jane@example.com">
+                    </div>
+
+                    <div class="w-1/2">
+                        <button class="bg-much-lighter py-2 px-4 block w-full appearance-none leading-normal"
+                            type="submit">
+                            Subscribe to themsaid.com
+                        </button>
+                    </div>
+                </div>
+            </form>
+
+            <p class="mt-5 leading-loose">
+                You can also <a href="https://twitter.com/themsaid">follow me on Twitter</a>, I regularly post about all
+                things Laravel including my latest
+                <a href="https://youtube.com/themsaid">video tutorials</a> and blog posts.
+            </p>
+        </div>
+
+        <div class="mt-10 mb-10 lg:flex items-center p-5 bg-light rounded">
+            <div class="w-full lg:w-1/6 w-5 text-center lg:text-left">
+                <img src="storage/wink/images/6qGrWzQydxTTxPmTfnsqHd8anuROdfQ4BrR9saXS.jpg"
+                    class="rounded-full w-32 lg:w-full">
+            </div>
+            <div class="lg:pl-5 leading-loose text-center lg:text-left text-text-color w-full lg:w-5/6">
+                By <span class="font-bold">Mohamed Said</span>
+                <div class="text-sm">
+                    <p>Hello! I'm a full-stack web developer working at Laravel. In this publication, I share everything
+                        I know about Laravel's core, packages, and tools. </p>
+                    <p>You can find me on <a href="https://twitter.com/themsaid" target="_blank">Twitter</a> and <a
+                            href="https://github.com/themsaid" target="_blank">Github</a>.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="border-t-2 border-light mt-10">
+        <div class="container mx-auto px-5 lg:max-w-screen">
+            <div class="text-muted py-10 text-center">
+                This site was built using <a href="https://github.com/themsaid/wink" target="_blank">Wink</a>. Follow
+                the
+                .
+            </div>
+        </div>
+    </div>
+</body>
+
+<!-- Mirrored from divinglaravel.com/better-management-of-database-transactions-in-laravel-8 by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 14 Feb 2021 10:34:51 GMT -->
+
+</html>

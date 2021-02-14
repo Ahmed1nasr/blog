@@ -1,0 +1,589 @@
+<!doctype html>
+<html lang="en" class="font-sans antialiased">
+
+<!-- Mirrored from divinglaravel.com/ by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 14 Feb 2021 10:34:34 GMT -->
+<!-- Added by HTTrack -->
+<meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+    <link rel="alternate" type="application/atom+xml" title="Diving Laravel" href="feed">
+
+    <meta name="theme-color" content="#011627">
+
+    <title>Diving Laravel - A deep dive into Laravel.</title>
+    <meta name="twitter:title" content="Diving Laravel  - A deep dive into Laravel.">
+    <meta name="og:title" content="Diving Laravel  - A deep dive into Laravel.">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:description" content="A dive into Laravel core, packages, and technologies.">
+    <meta name="twitter:site" content="@themsaid">
+    <meta name="twitter:image" content="images/divinglaravel.png">
+
+    <meta name="og:site_name" content="Diving Laravel">
+    <meta name="og:image" content="images/divinglaravel.png">
+    <meta name="og:type" content="website">
+    <meta name="og:locale" content="en_US">
+
+    <script src="../cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <link rel="stylesheet" href="../cdn.jsdelivr.net/gh/highlightjs/cdn-release%409.13.1/build/styles/sunburst.min.css">
+
+    <!-- Styles -->
+    <link href="css/main.css?id=50f9b785cb9b0883434d" rel="stylesheet">
+
+    <script>
+        if (window.matchMedia &&
+            window.matchMedia('(prefers-color-scheme: light)').matches) {
+            var head = document.getElementsByTagName('head')[0];
+            var link = document.createElement('link');
+            link.rel = 'stylesheet';
+            link.type = 'text/css';
+            link.href = '../cdn.jsdelivr.net/gh/highlightjs/cdn-release%409.13.1/build/styles/github.min.css';
+            head.appendChild(link);
+        }
+    </script>
+
+    <style>
+        @media (prefers-color-scheme: light) {
+            body {
+                background: #fff;
+                background-image: none !important;
+            }
+
+            .text-white,
+            .text-text-color,
+            a {
+                color: #4a5568;
+            }
+
+            .border-light {
+                border-color: #dbe6ef;
+            }
+
+            .text-muted {
+                color: #3e5780;
+            }
+
+            .text-white:hover,
+            a:hover {
+                color: #000 !important;
+            }
+
+            .bg-light {
+                background-color: #e9eef2;
+            }
+
+            .post-body code:not(.hljs) {
+                background: #cde0ef;
+                color: #205378;
+            }
+
+            .post-body pre {
+                background: #e9eef2;
+                color: #000;
+            }
+        }
+    </style>
+
+    <!-- Fathom - beautiful, simple website analytics -->
+    <script src="../cdn.usefathom.com/script.js" site="UDEQGJZA" defer></script>
+    <!-- / Fathom -->
+
+</head>
+
+<body class="text-white body-bg-gradient bg-repeat-x">
+    <header class="py-5 mb-10">
+        <div class="container mx-auto px-5 lg:max-w-screen">
+            <div class="flex items-center">
+                <a href="index.html" class="no-underline text-white text-2xl font-thin tracking-wide">Diving Laravel</a>
+
+                <div class="ml-auto flex items-center">
+                    <a href="index.html"
+                        class="text-white no-underline hover:underline text-xs font-bold uppercase">Home</a>
+                    <a href="topics.html"
+                        class="ml-5 text-white no-underline hover:underline text-xs font-bold uppercase">Topics</a>
+                    <a href="quick-dip.html"
+                        class="ml-5 text-white no-underline hover:underline text-xs font-bold uppercase">Quick Dip</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container mx-auto px-5 lg:max-w-screen mb-10 pb-5">
+        <div class="lg:flex items-center lg:px-10">
+            <div class="w-full lg:w-1/6 text-center lg:text-left lg:block hidden">
+                <img src="storage/wink/images/6qGrWzQydxTTxPmTfnsqHd8anuROdfQ4BrR9saXS.jpg" class="rounded-full">
+            </div>
+            <div class="lg:pl-5 leading-loose text-text-color w-full lg:w-5/6">
+                <div>
+                    I'm
+                    <a href="https://twitter.com/themsaid">Mohamed Said</a>, a full-stack web developer working at
+                    Laravel.
+                    In this publication,
+                    I share everything I know about Laravel's core, packages, and tools.
+                    <br> Browse the list of
+                    <a href="topics.html">topics</a> or check the latest posts from below.
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container mx-auto px-5 lg:max-w-screen">
+
+        <a class="no-underline transition block" href="job-encryption-in-laravel.html">
+            <div class="w-full mb-10 p-5 bg-light rounded">
+                <p class="text-muted font-sans text-xs mb-2">
+                    <span>Updated: Feb 5, 2021 —</span>
+                    <span class="uppercase">1 min Read</span>
+
+                    —
+                    #queues
+                </p>
+
+                <h2 class="leading-normal block">
+                    Job Encryption in Laravel
+                </h2>
+
+                <p class="leading-normal mt-1 text-muted">
+                    Job Encryption was introduced in Laravel v8.19.0. Let&#039;s see why you might need it and how you
+                    can use it.
+                </p>
+            </div>
+        </a>
+
+        <a class="no-underline transition block" href="better-management-of-database-transactions-in-laravel-8.html">
+            <div class="w-full mb-10 p-5 bg-light rounded">
+                <p class="text-muted font-sans text-xs mb-2">
+                    <span>Updated: Dec 22, 2020 —</span>
+                    <span class="uppercase">2 min Read</span>
+
+                    —
+                    #databases
+                    #queues
+                    #notifications
+                </p>
+
+                <h2 class="leading-normal block">
+                    Better Management of Database Transactions in Laravel 8
+                </h2>
+
+                <p class="leading-normal mt-1 text-muted">
+                    Using database transactions is a powerful way to ensure data integrity. However, it&#039;s a bit
+                    tricky to control how non-sql code that runs around database transactions behaves when transactions
+                    are committed or rolled back. In this post, we&#039;ll look into the new transactions management
+                    capabilities in Laravel 8.
+                </p>
+            </div>
+        </a>
+
+        <a class="no-underline transition block"
+            href="the-problem-behind-undefined-constant-stdin-when-running-laravel-artisan-command-programmatically.html">
+            <div class="w-full mb-10 p-5 bg-light rounded">
+                <p class="text-muted font-sans text-xs mb-2">
+                    🔥 Quick Dip — Updated: Nov 13, 2020
+                </p>
+                <h2 class="leading-normal block">
+                    The problem behind Undefined constant &#039;STDIN&#039; when running Laravel artisan command
+                    programmatically
+                </h2>
+            </div>
+        </a>
+
+        <a class="no-underline transition block"
+            href="integrity-constraint-violation-duplicate-entry-for-key-failed_jobs_uuid_unique.html">
+            <div class="w-full mb-10 p-5 bg-light rounded">
+                <p class="text-muted font-sans text-xs mb-2">
+                    🔥 Quick Dip — Updated: Nov 9, 2020
+                </p>
+                <h2 class="leading-normal block">
+                    The problem behind &quot;Integrity constraint violation: 1062 Duplicate entry for key
+                    &#039;failed_jobs_uuid_unique&#039;&quot;
+                </h2>
+            </div>
+        </a>
+
+        <a class="no-underline transition block" href="dispatching-unique-jobs-to-laravel-queues.html">
+            <div class="w-full mb-10 p-5 bg-light rounded">
+                <p class="text-muted font-sans text-xs mb-2">
+                    <span>Updated: Oct 25, 2020 —</span>
+                    <span class="uppercase">1 min Read</span>
+
+                    —
+                    #queues
+                </p>
+
+                <h2 class="leading-normal block">
+                    Dispatching Unique Jobs to Laravel Queues
+                </h2>
+
+                <p class="leading-normal mt-1 text-muted">
+                    With a few simple changes, we are going to ensure only a single instance of a given job exists in
+                    the queue at any given time.
+                </p>
+            </div>
+        </a>
+
+        <a class="no-underline transition block" href="designing-reliable-queued-jobs-making-jobs-self-contained.html">
+            <div class="w-full mb-10 p-5 bg-light rounded">
+                <p class="text-muted font-sans text-xs mb-2">
+                    <span>Updated: Oct 21, 2020 —</span>
+                    <span class="uppercase">1 min Read</span>
+
+                    —
+                    #queues
+                </p>
+
+                <h2 class="leading-normal block">
+                    Designing reliable queued jobs: Making Jobs Self-contained
+                </h2>
+
+                <p class="leading-normal mt-1 text-muted">
+                    To design reliable queued jobs, we must consider each stage the jobs go through.
+
+                    In this post, we&#039;re going to look at one of the most important things to consider when
+                    designing a queued job.
+                </p>
+            </div>
+        </a>
+
+        <a class="no-underline transition block" href="avoiding-memory-leaks-when-running-laravel-queue-workers.html">
+            <div class="w-full mb-10 p-5 bg-light rounded">
+                <p class="text-muted font-sans text-xs mb-2">
+                    <span>Updated: Sep 21, 2020 —</span>
+                    <span class="uppercase">1 min Read</span>
+
+                    —
+                    #queues
+                </p>
+
+                <h2 class="leading-normal block">
+                    Avoiding Memory Leaks When Running Laravel Queue Workers
+                </h2>
+
+                <p class="leading-normal mt-1 text-muted">
+                    Avoiding memory leaks can be a bit challenging. Over time, some references will pile up in the
+                    server memory that won&#039;t be detected by PHP. In this post, we&#039;ll look at our options in
+                    dealing with this.
+                </p>
+            </div>
+        </a>
+
+        <a class="no-underline transition block"
+            href="switching-between-queue-drivers-in-laravel-without-stopping-the-world.html">
+            <div class="w-full mb-10 p-5 bg-light rounded">
+                <p class="text-muted font-sans text-xs mb-2">
+                    <span>Updated: Sep 16, 2020 —</span>
+                    <span class="uppercase">1 min Read</span>
+
+                    —
+                    #queues
+                </p>
+
+                <h2 class="leading-normal block">
+                    Switching Between Queue Drivers in Laravel Without Stopping the World
+                </h2>
+
+                <p class="leading-normal mt-1 text-muted">
+                    Each of the queue drivers supported by Laravel has its pros and cons, and sometimes you may want to
+                    switch between drivers to accommodate business needs. In this post we&#039;re going to look into the
+                    possible ways to switch between drivers.
+                </p>
+            </div>
+        </a>
+        <div class="w-full mb-10 p-5 bg-light rounded">
+            <p class="mb-5 leading-loose">
+                Hey! 👋 If you want to receive updates on what I'm up to, I host a newsletter on my website <a
+                    href="https://themsaid.com/">themsaid.com</a> and would love to have you.
+            </p>
+
+
+            <form method="POST" action="https://divinglaravel.com/newsletter">
+                <div id="my_name_Je6vO1kMRcPFwFbA_wrap" style="display:none;">
+                    <input name="my_name_Je6vO1kMRcPFwFbA" type="text" value="" id="my_name_Je6vO1kMRcPFwFbA">
+                    <input name="valid_from" type="text"
+                        value="eyJpdiI6IlZEZGlkRGdndTM1R2JHTXI1Nmg0ZVE9PSIsInZhbHVlIjoiMXRudjlaeG1Heit3bUdkUzZ2dk5vZz09IiwibWFjIjoiYjBhYzk1NWJlNzU2NjQwYTJhMzU0OWY4YjQ1MGJiNDQzOTY4NzE2NzM2NDkxMjA0ODI2YWM1NDRlMmI5OTFhYyJ9">
+                </div>
+                <input type="hidden" name="_token" value="z772BDrjOfDJZfihhnkjMhbPf2St4x5kuq4R09Xj">
+                <div class="flex">
+                    <div class="w-1/2">
+                        <input class="bg-white focus:outline-none py-2 px-4 block w-full appearance-none leading-normal"
+                            type="email" name="email" placeholder="jane@example.com">
+                    </div>
+
+                    <div class="w-1/2">
+                        <button class="bg-much-lighter py-2 px-4 block w-full appearance-none leading-normal"
+                            type="submit">
+                            Subscribe to themsaid.com
+                        </button>
+                    </div>
+                </div>
+            </form>
+
+            <p class="mt-5 leading-loose">
+                You can also <a href="https://twitter.com/themsaid">follow me on Twitter</a>, I regularly post about all
+                things Laravel including my latest
+                <a href="https://youtube.com/themsaid">video tutorials</a> and blog posts.
+            </p>
+        </div>
+
+        <a class="no-underline transition block" href="queue-job-batching-in-laravel-how-it-works.html">
+            <div class="w-full mb-10 p-5 bg-light rounded">
+                <p class="text-muted font-sans text-xs mb-2">
+                    <span>Updated: Sep 7, 2020 —</span>
+                    <span class="uppercase">3 min Read</span>
+
+                    —
+                    #queues
+                </p>
+
+                <h2 class="leading-normal block">
+                    Job Batching in Laravel: How It Works
+                </h2>
+
+                <p class="leading-normal mt-1 text-muted">
+                    Laravel 8 ships with a neat feature that allows us to dispatch a group of jobs to the queue to be
+                    executed in parallel. In this post, we&#039;re going to look into how this works under the hood.
+                </p>
+            </div>
+        </a>
+
+        <a class="no-underline transition block" href="features-and-changes-coming-to-laravel-8-queue-system.html">
+            <div class="w-full mb-10 p-5 bg-light rounded">
+                <p class="text-muted font-sans text-xs mb-2">
+                    <span>Updated: Sep 11, 2020 —</span>
+                    <span class="uppercase">3 min Read</span>
+
+                    —
+                    #queues
+                </p>
+
+                <h2 class="leading-normal block">
+                    Features and Changes Coming to Laravel 8&#039;s Queue System
+                </h2>
+
+                <p class="leading-normal mt-1 text-muted">
+                    Laravel 8 ships with cool new features as well as some changes to the queue component. In this post
+                    we&#039;ll look into these features and changes.
+                </p>
+            </div>
+        </a>
+
+        <a class="no-underline transition block" href="laravel-queues-and-deployments.html">
+            <div class="w-full mb-10 p-5 bg-light rounded">
+                <p class="text-muted font-sans text-xs mb-2">
+                    <span>Updated: Sep 8, 2020 —</span>
+                    <span class="uppercase">3 min Read</span>
+
+                    —
+                    #queues
+                </p>
+
+                <h2 class="leading-normal block">
+                    Laravel Queues and Deployments
+                </h2>
+
+                <p class="leading-normal mt-1 text-muted">
+                    In this post, we&#039;re going to look into handling queued jobs while deploying your applications.
+                    We&#039;ll discuss restarting normal workers &amp; Horizon workers as well as handling migrations.
+                </p>
+            </div>
+        </a>
+
+        <a class="no-underline transition block" href="dealing-with-api-rate-limits-in-queued-jobs.html">
+            <div class="w-full mb-10 p-5 bg-light rounded">
+                <p class="text-muted font-sans text-xs mb-2">
+                    <span>Updated: Sep 8, 2020 —</span>
+                    <span class="uppercase">2 min Read</span>
+
+                    —
+                    #queues
+                </p>
+
+                <h2 class="leading-normal block">
+                    Dealing With API Rate Limits in Queued Jobs
+                </h2>
+
+                <p class="leading-normal mt-1 text-muted">
+                    In this post, We&#039;ll see how we may deal with a queued job that sends an HTTP request to an API
+                    that only allows 30 requests per minute.
+                </p>
+            </div>
+        </a>
+
+        <a class="no-underline transition block"
+            href="laravel-queues-in-action-running-the-same-job-multiple-times.html">
+            <div class="w-full mb-10 p-5 bg-light rounded">
+                <p class="text-muted font-sans text-xs mb-2">
+                    <span>Updated: Sep 8, 2020 —</span>
+                    <span class="uppercase">2 min Read</span>
+
+                    —
+                    #queues
+                </p>
+
+                <h2 class="leading-normal block">
+                    Running The Same Queued Job Multiple Times
+                </h2>
+
+                <p class="leading-normal mt-1 text-muted">
+                    Learn how you can use use Laravel Queues to re-use the same job instance multiple times to execute
+                    different logic.
+                </p>
+            </div>
+        </a>
+
+        <a class="no-underline transition block" href="balancing-job-processing-across-different-userstenants.html">
+            <div class="w-full mb-10 p-5 bg-light rounded">
+                <p class="text-muted font-sans text-xs mb-2">
+                    <span>Updated: May 25, 2020 —</span>
+                    <span class="uppercase">1 min Read</span>
+
+                    —
+                    #multi-tenancy
+                    #queues
+                </p>
+
+                <h2 class="leading-normal block">
+                    Balancing job processing across different users/tenants
+                </h2>
+
+                <p class="leading-normal mt-1 text-muted">
+                    A look into preventing one tenant that&#039;s pushing too many jobs from delaying job processing of
+                    other tenants.
+                </p>
+            </div>
+        </a>
+
+        <a class="no-underline transition block" href="the-backend-for-frontend-pattern-for-monoliths.html">
+            <div class="w-full mb-10 p-5 bg-light rounded">
+                <p class="text-muted font-sans text-xs mb-2">
+                    <span>Updated: May 13, 2020 —</span>
+                    <span class="uppercase">1 min Read</span>
+
+                </p>
+
+                <h2 class="leading-normal block">
+                    The Backend-for-frontend Pattern For Monoliths
+                </h2>
+
+                <p class="leading-normal mt-1 text-muted">
+                    In this post I discuss the backend-for-frontend pattern and how it can be used in a monolith
+                    application.
+                </p>
+            </div>
+        </a>
+
+        <a class="no-underline transition block" href="multi-tenancy-in-laravel.html">
+            <div class="w-full mb-10 p-5 bg-light rounded">
+                <p class="text-muted font-sans text-xs mb-2">
+                    <span>Updated: May 17, 2020 —</span>
+                    <span class="uppercase">2 min Read</span>
+
+                    —
+                    #multi-tenancy
+                </p>
+
+                <h2 class="leading-normal block">
+                    Multi-tenancy in Laravel
+                </h2>
+
+                <p class="leading-normal mt-1 text-muted">
+                    I recently started a deep dive into multi-tenancy in Laravel, specifically the database-per-tenant
+                    approach, and created a video on how to achieve multi-tenancy without any packages...
+                </p>
+            </div>
+        </a>
+
+        <a class="no-underline transition block"
+            href="laravel-session-based-authentication-csrf-protection-and-cors.html">
+            <div class="w-full mb-10 p-5 bg-light rounded">
+                <p class="text-muted font-sans text-xs mb-2">
+                    <span>Updated: Apr 20, 2020 —</span>
+                    <span class="uppercase">1 min Read</span>
+
+                </p>
+
+                <h2 class="leading-normal block">
+                    Laravel session-based authentication, CSRF Protection, and CORS
+                </h2>
+
+            </div>
+        </a>
+
+        <a class="no-underline transition block" href="explaining-laravel-queue-configuration-keys.html">
+            <div class="w-full mb-10 p-5 bg-light rounded">
+                <p class="text-muted font-sans text-xs mb-2">
+                    <span>Updated: Mar 9, 2020 —</span>
+                    <span class="uppercase">1 min Read</span>
+
+                    —
+                    #queues
+                </p>
+
+                <h2 class="leading-normal block">
+                    Explaining Laravel Queue configuration keys
+                </h2>
+
+                <p class="leading-normal mt-1 text-muted">
+                    In this series of video tweets, I&#039;ve explained some of the most confusing Queue configuration
+                    keys
+                </p>
+            </div>
+        </a>
+
+        <a class="no-underline transition block" href="when-does-php-call-__destruct.html">
+            <div class="w-full mb-10 p-5 bg-light rounded">
+                <p class="text-muted font-sans text-xs mb-2">
+                    🔥 Quick Dip — Updated: Feb 18, 2020
+                </p>
+                <h2 class="leading-normal block">
+                    When does PHP call __destruct()?
+                </h2>
+            </div>
+        </a>
+
+        <a class="no-underline transition block" href="asynchronous-php.html">
+            <div class="w-full mb-10 p-5 bg-light rounded">
+                <p class="text-muted font-sans text-xs mb-2">
+                    <span>Updated: Feb 12, 2020 —</span>
+                    <span class="uppercase">1 min Read</span>
+
+                </p>
+
+                <h2 class="leading-normal block">
+                    Asynchronous PHP
+                </h2>
+
+                <p class="leading-normal mt-1 text-muted">
+                    PHP code is blocking, meaning that one block of code will not run until the block prior to it has
+                    finished. It wasn&#039;t built with asynchronous execution in mind. However, we can still run code
+                    in an asynchronous fashion while using PHP.
+                </p>
+            </div>
+        </a>
+
+        <div class="uppercase flex items-center justify-center flex-1 py-5 font-sans">
+
+            <a href="index4658.html?page=2" rel="next" class="block no-underline text-muted hover:text-white px-5">Check
+                More Articles</a>
+        </div>
+
+    </div>
+
+    <div class="border-t-2 border-light mt-10">
+        <div class="container mx-auto px-5 lg:max-w-screen">
+            <div class="text-muted py-10 text-center">
+                This site was built using <a href="https://github.com/themsaid/wink" target="_blank">Wink</a>. Follow
+                the
+                .
+            </div>
+        </div>
+    </div>
+</body>
+
+<!-- Mirrored from divinglaravel.com/ by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 14 Feb 2021 10:34:46 GMT -->
+
+</html>
