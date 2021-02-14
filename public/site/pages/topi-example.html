@@ -198,7 +198,8 @@ Mail::to($user)-&gt;send(<span class="hljs-keyword">new</span> WelcomeEmail());
                 cases code that runs around database queries is not directly invoked. For example, the email sending
                 could be inside a listener to the <code>UserCreated</code> event that fires after
                 <code>User::create()</code>. In that case, the email sending will happen right after the user is created
-                and before the transaction has committed.</p>
+                and before the transaction has committed.
+            </p>
             <p>Starting Laravel <code>v8.19.0</code>, you can wrap any code inside a closure that'll only get invoked
                 after all transactions have committed. So inside the event listener that sends the email, you can do
                 this:</p>
@@ -208,12 +209,13 @@ Mail::to($user)-&gt;send(<span class="hljs-keyword">new</span> WelcomeEmail());
         DB::afterCommit(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span></span>{
             Mail::to($user)-&gt;send(<span class="hljs-keyword">new</span> WelcomeEmail());
         });
-    }    
+    }
 }
 </pre>
             <p>Now when the user gets created and the event is fired, the listener will call the
                 <code>afterCommit</code> method which will put the mail sending logic in a local cache and will only
-                execute it after any database transaction that may be open has committed.</p>
+                execute it after any database transaction that may be open has committed.
+            </p>
             <p>But let's agree, having to wrap code inside a closure doesn't make it look any nicer. For that reason,
                 Laravel introduces another way to ensure your listeners are only executed when database transactions
                 have committed. Let's take the <code>SendWelcomeEmail</code> listener as an example:</p>
@@ -223,12 +225,13 @@ Mail::to($user)-&gt;send(<span class="hljs-keyword">new</span> WelcomeEmail());
     <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">handle</span><span class="hljs-params">()</span>
     ﻿</span>{
         Mail::to($user)-&gt;send(<span class="hljs-keyword">new</span> WelcomeEmail());
-    }    
+    }
 }
 </pre>
             <p>Using the <code>$afterCommit</code> property, we can instruct laravel to only run the
                 <code>handle()</code> method after any open transactions have committed. If no transactions are open,
-                the code will run right away like normal.</p>
+                the code will run right away like normal.
+            </p>
             <p>Another scenario in which this comes in handy is dispatching a queued job, mail, notification,
                 broadcasted event, or listener from inside a transaction. The workers may pick the work before the
                 transaction commits and the code will run on a database state where the records modified by the
@@ -250,7 +253,8 @@ Mail::to($user)-&gt;send(<span class="hljs-keyword">new</span> WelcomeEmail());
             <p>Setting the <code>$afterCommit</code> property to true in the job class will ensure the job only gets
                 dispatched if the transaction has committed. You can also set <code>after_commit</code> to
                 <code>true</code> in the queue connection configuration inside the <code>queue.php</code> configuration
-                file:</p>
+                file:
+            </p>
             <pre class="ql-syntax" spellcheck="false"><span class="hljs-string">'redis'</span> =&gt; [
     <span class="hljs-string">'driver'</span> =&gt; <span class="hljs-string">'redis'</span>,
     <span class="hljs-string">'connection'</span> =&gt; <span class="hljs-string">'default'</span>,
