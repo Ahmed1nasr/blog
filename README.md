@@ -1,6 +1,7 @@
 ## laravel project : https://github.com/elsayed85/my_blog 
 ## Api V1 : https://documenter.getpostman.com/view/8692544/TWDTLyP6 
 # To Run the project :
+
 1. git clone https://github.com/elsayed85/my_blog 
 2. cd my_blog 
 3. install dependencies : composer install
