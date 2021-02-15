@@ -36,7 +36,7 @@ class WinkTables extends Migration
             $table->text('excerpt');
             $table->text('body');
             $table->boolean('published')->default(false);
-            $table->dateTime('publish_date')->default('2018-10-10 00:00:00');
+            $table->dateTime('publish_date')->default(now());
             $table->string('featured_image')->nullable();
             $table->string('featured_image_caption');
             $table->uuid('author_id')->index();
@@ -45,7 +45,7 @@ class WinkTables extends Migration
         });
 
         Schema::create('wink_authors', function (Blueprint $table) {
-            $table->uuid('id')->primary();
+            $table->id();
             $table->string('slug')->unique();
             $table->string('name');
             $table->string('email')->unique();

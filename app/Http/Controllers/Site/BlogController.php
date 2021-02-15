@@ -3,11 +3,11 @@
 namespace App\Http\Controllers\Site;
 
 use App\Http\Controllers\Controller;
+use App\Services\Wink\WinkAuthor;
+use App\Services\Wink\WinkPost;
+use App\Services\Wink\WinkTag;
 use Illuminate\Http\Request;
-use Wink\WinkAuthor;
-use Wink\WinkPage;
-use Wink\WinkPost;
-use Wink\WinkTag;
+
 
 class BlogController extends Controller
 {

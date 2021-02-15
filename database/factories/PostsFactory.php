@@ -3,10 +3,10 @@
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
 use App\Model;
+use App\Services\Wink\WinkAuthor;
+use App\Services\Wink\WinkPost;
 use Faker\Generator as Faker;
 use Illuminate\Support\Str;
-use Wink\WinkAuthor;
-use Wink\WinkPost;
 
 $factory->define(WinkPost::class, function (Faker $faker) {
     return [

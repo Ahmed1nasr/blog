@@ -1,11 +1,11 @@
 <?php
 
+use App\Services\Wink\WinkAuthor;
+use App\Services\Wink\WinkPost;
+use App\Services\Wink\WinkTag;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
-use Wink\WinkAuthor;
-use Wink\WinkPost;
-use Wink\WinkTag;
 
 class DatabaseSeeder extends Seeder
 {
@@ -17,7 +17,6 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         WinkAuthor::create([
-            'id' => (string) Str::uuid(),
             'name' => 'Elsayed Kamal',
             'slug' => 'elsayed',
             'bio' => "I'm a Web developer who is passionate about creating Laravel Apps.",
@@ -26,7 +25,6 @@ class DatabaseSeeder extends Seeder
         ]);
 
         WinkAuthor::create([
-            'id' => (string) Str::uuid(),
             'name' => 'Ahmed Essam',
             'slug' => 'ahmed',
             'bio' => "this ahmed essam bio",

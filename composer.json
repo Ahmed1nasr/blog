@@ -9,14 +9,16 @@
     "license": "MIT",
     "require": {
         "php": "^7.2.5|^8.0",
+        "cviebrock/eloquent-sluggable": "^7.0",
         "f9webltd/laravel-meta": "^1.7",
         "fideloper/proxy": "^4.4",
         "fruitcake/laravel-cors": "^2.0",
+        "goldspecdigital/laravel-eloquent-uuid": "^7.0",
         "guzzlehttp/guzzle": "^6.3.1|^7.0.1",
         "laravel/framework": "^7.29",
+        "laravel/sanctum": "^2.9",
         "laravel/tinker": "^2.5",
-        "livewire/livewire": "^2.3",
-        "themsaid/wink": "^1.2"
+        "livewire/livewire": "^2.3"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.5",
@@ -33,12 +35,13 @@
     },
     "extra": {
         "laravel": {
-            "dont-discover": []
+            "dont-discover": ["themsaid/wink"]
         }
     },
     "autoload": {
         "psr-4": {
-            "App\\": "app/"
+            "App\\": "app/",
+            "Wink\\": "app//Services//Wink"
         },
         "classmap": [
             "database/seeds",
