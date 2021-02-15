@@ -9,3 +9,4 @@
 6. update database configration and aother configtations in .env file to your own configrations
 7. For Fake data run : php artisan migrate:fresh --seed
 8. Run queue For reset password mails : php artisan queue:work
+9. to open author dashboard localhost/wink (you can change link and other configrations : go to config/wink.php)
