@@ -1,5 +1,5 @@
-<img src="dashboard.png">
-<img src="api.png"> 
+![alt text](dashboard.png , "dashboard")
+![alt text](api.png , "api")
 ### laravel project : https://github.com/elsayed85/my_blog 
 ### Api V1 : https://documenter.getpostman.com/view/8692544/TWDTLyP6 
 ### To Run the project :
